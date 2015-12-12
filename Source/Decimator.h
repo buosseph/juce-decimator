@@ -25,14 +25,21 @@ private:
 public:
     Decimator()
     {
-        output = 0.f;
-        counter = 0.f;
+        reset();
         quantization = powf(2.f, 32.f);
     }
     
+    // Should be called whenever the host sample rate changes
+    void reset() {
+        output = 0.f;
+        counter = 0.f;
+    }
+    
+    // Parameter ranges
+    // - bit_depth: [1.f, 32.f]
+    // - sample_rate: [0.f, 1.f]
     float decimate (float sample, float bit_depth, float sample_rate)
     {
-        output = 0.f;
         quantization = powf(2.f, bit_depth);
         
         counter += sample_rate;

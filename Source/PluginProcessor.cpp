@@ -15,8 +15,7 @@
 //==============================================================================
 PluginAudioProcessor::PluginAudioProcessor()
 {
-    processors[0] = new Decimator();
-    processors[1] = new Decimator();
+    processor = new Decimator();
     
     addParameter(bit_depth_parameter = new AudioParameterFloat("id1",
                                         "Bit Depth",
@@ -115,6 +114,7 @@ void PluginAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock
 {
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
+    processor->reset();
 }
 
 void PluginAudioProcessor::releaseResources()
@@ -138,9 +138,9 @@ void PluginAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& 
         float* channelData = buffer.getWritePointer (channel);
         
         for (int i = 0; i < buffer.getNumSamples(); ++i) {
-            channelData[i] = processors[channel]->decimate(channelData[i],
-                                                           bit_depth,
-                                                           sample_rate);
+            channelData[i] = processor->decimate(channelData[i],
+                                                 bit_depth,
+                                                 sample_rate);
         }
     }
 }

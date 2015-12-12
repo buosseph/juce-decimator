@@ -63,7 +63,7 @@ public:
     AudioParameterFloat* sample_rate_parameter;
 
 private:
-    Decimator* processors[2];
+    Decimator* processor;
     
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PluginAudioProcessor)
